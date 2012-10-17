@@ -12,11 +12,17 @@ class PicturesController < ApplicationController
   
   def index
     @pics = picture_data
-    @width = params[:width]
-    @color = params[:color]
+    @pics << { :url => params[:url], :title => params[:title]} 
+ 
   end
   
-  
+ def create
+   pictures = Picture.new
+   pictures.url = params[:url]
+   pictures.title = params[:title]
+   pictures.save
+   redirect_to 'http://localhost:3000/pictures'   
+ end
   
   def picture_data
     return [
@@ -28,6 +34,7 @@ class PicturesController < ApplicationController
       },
       { :url => "http://www.trbimg.com/img-5078b31c/turbine/ct-top-less-crowded-ruins-sites-pg-009/600",
         :title => "Mayan Ruins"
+        
       }
     ]
   end 
